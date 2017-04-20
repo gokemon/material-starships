@@ -17,12 +17,12 @@
         ctrl.submitForm = submitForm;
 
         function cancelAdd() {
-            // TODO: Add mdDialog.hide
+            $mdDialog.cancel();
         }
 
         function submitForm(form) {
             if (form.$valid === true) {
-                // TODO: Add mdDialog.cancel
+                $mdDialog.hide(ctrl.starship);
             } else {
                 form.name.$setTouched();
                 form.manufacturer.$setTouched();

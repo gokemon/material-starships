@@ -1,0 +1,49 @@
+<md-dialog id="add-starship-dialog" aria-label="Add starship dialog"
+           flex="90" flex-sm="60" flex-md="50" flex-lg="40" flex-xl="30">
+    <md-dialog-content>
+        <h3 class="md-title">Add Starship</h3>
+        <h4 class="md-subhead">Fill out the form to create a new starship listing.</h4>
+
+        <form name="addStarshipForm" ng-submit="$ctrl.submitForm(addStarshipForm)" novalidate="">
+            <md-input-container class="md-block" flex>
+                <label>Name</label>
+                <input type="text" name="name" required
+                       ng-model="$ctrl.starship.name"
+                       md-maxlength="40">
+                <div ng-messages="addStarshipForm.name.$error">
+                    <div ng-message="required">Required</div>
+                    <div ng-message="md-maxlength">The title must be less than 40 characters long.</div>
+                </div>
+            </md-input-container>
+
+            <md-input-container class="md-block" flex>
+                <label>Manufacturer</label>
+                <input type="text" name="manufacturer" required
+                       ng-model="$ctrl.starship.manufacturer">
+                <div ng-messages="addStarshipForm.manufacturer.$error">
+                    <div ng-message="required">Required</div>
+                </div>
+            </md-input-container>
+
+            <md-input-container class="md-block" flex>
+                <label>Model</label>
+                <input type="text" name="model" required
+                       ng-model="$ctrl.starship.model">
+                <div ng-messages="addStarshipForm.model.$error">
+                    <div ng-message="required">Required</div>
+                </div>
+            </md-input-container>
+
+            <input type="submit" value="Submit" hide>
+        </form>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row" layout-align="end">
+        <md-button class="md-flat md-cornered" ng-click="$ctrl.cancelAdd()">
+            Cancel
+        </md-button>
+        <md-button class="md-accent" ng-click="$ctrl.submitForm(addStarshipForm)">
+            Save
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

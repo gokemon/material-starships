@@ -1,0 +1,131 @@
+<div layout="column" layout-fill>
+    <md-toolbar class="md-primary md-whiteframe-2dp">
+        <div class="md-toolbar-tools">
+            <div flex layout="row" layout-align="start center"
+                 ng-show="$ctrl.searching === false">
+                <h2 md-truncate>Star Wars Starships</h2>
+                <md-button class="md-icon-button" aria-label="Search"
+                           ng-click="$ctrl.openSearch()">
+                    <md-icon md-svg-icon="search"></md-icon>
+                </md-button>
+            </div>
+
+            <div class="search-container" flex layout="row" layout-align="start center"
+                 ng-show="$ctrl.searching === true">
+                <md-input-container flex>
+                    <label>Search</label>
+                    <input type="text" name="search" ng-model="$ctrl.starshipSearch.$">
+                </md-input-container>
+                <md-button class="md-icon-button" aria-label="Close Search"
+                           ng-click="$ctrl.closeSearch()">
+                    <md-icon md-svg-icon="close"></md-icon>
+                </md-button>
+            </div>
+
+            <md-button class="md-fab md-accent" aria-label="Add Starship"
+                       ng-click="$ctrl.addStarship(($ctrl.starships | filter:$ctrl.starshipSearch).length, $event)">
+                <md-icon md-svg-src="add"></md-icon>
+            </md-button>
+        </div>
+        <md-progress-linear class="md-primary" md-mode="indeterminate" ng-if="$ctrl.loading === true"></md-progress-linear>
+    </md-toolbar>
+
+    <div flex layout="row">
+        <md-content flex="{{ $ctrl.openStarship === null ? '100' : '0' }}"
+                    flex-gt-sm="{{ $ctrl.openStarship === null ? '100' : '50' }}">
+            <md-list flex>
+                <md-list-item class="md-2-line"
+                              ng-click="$ctrl.openDetails(starship)"
+                              ng-repeat="starship in $ctrl.starships | orderBy:'name' | filter:$ctrl.starshipSearch">
+                    <img ng-src="data:image/png;base64,{{ $ctrl.compileIdenticon(starship) }}" class="md-avatar" alt="{{ starship.name }}" />
+                    <div class="md-list-item-text">
+                        <h3>{{ starship.name }}</h3>
+                        <p>{{ starship.starship_class }}</p>
+                    </div>
+                    <md-divider ng-if="!$last"></md-divider>
+                </md-list-item>
+            </md-list>
+        </md-content>
+        <md-content flex ng-if="$ctrl.openStarship !== null">
+            <md-card>
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">{{ $ctrl.openStarship.name }}</span>
+
+                        <div class="metadata-2-line">
+                            <p class="md-body-1">{{ $ctrl.openStarship.manufacturer }}</p>
+                            <p class="md-caption">Manufacturer</p>
+                        </div>
+
+                        <div class="metadata-2-line">
+                            <p class="md-body-1">{{ $ctrl.openStarship.model }}</p>
+                            <p class="md-caption">Model</p>
+                        </div>
+
+                        <div class="metadata-2-line" flex>
+                            <p class="md-body-1">{{ $ctrl.openStarship.cost_in_credits | currency:"€":0 }}</p>
+                            <p class="md-caption">Cost</p>
+                        </div>
+                    </md-card-title-text>
+                    <md-card-title-media>
+                        <img ng-src="data:image/png;base64,{{ $ctrl.compileIdenticon($ctrl.openStarship) }}" alt="{{ $ctrl.openStarship.name }}" />
+                    </md-card-title-media>
+                </md-card-title>
+                <md-card-content>
+                    <md-subheader class="md-accent md-no-sticky">Specifications</md-subheader>
+                    <div layout="row">
+                        <div class="metadata-2-line" flex>
+                            <p class="md-body-1">{{ $ctrl.openStarship.starship_class }}</p>
+                            <p class="md-caption">Starship Class</p>
+                        </div>
+                        <div class="metadata-2-line" flex>
+                            <p class="md-body-1">{{ $ctrl.openStarship.length }}</p>
+                            <p class="md-caption">Length <em>(m)</em></p>
+                        </div>
+                    </div>
+                    <div layout="row">
+                        <div class="metadata-2-line" flex>
+                            <p class="md-body-1">{{ $ctrl.openStarship.crew }}</p>
+                            <p class="md-caption">Required Crew</p>
+                        </div>
+                        <div class="metadata-2-line" flex>
+                            <p class="md-body-1">{{ $ctrl.openStarship.passengers }}</p>
+                            <p class="md-caption">Max Passengers</p>
+                        </div>
+                    </div>
+
+                    <md-subheader class="md-accent md-no-sticky">Engine Details</md-subheader>
+                    <div layout="row">
+                        <div class="metadata-2-line" flex>
+                            <p class="md-body-1">{{ $ctrl.openStarship.hyperdrive_rating }}</p>
+                            <p class="md-caption">Hyperdrive Rating</p>
+                        </div>
+                        <div class="metadata-2-line" flex>
+                            <p class="md-body-1">{{ $ctrl.openStarship.max_atmosphering_speed }}</p>
+                            <p class="md-caption">Max Atmosphering Speed</p>
+                        </div>
+                    </div>
+                    <div class="metadata-2-line" flex>
+                        <p class="md-body-1">{{ $ctrl.openStarship.MGLT }}</p>
+                        <p class="md-caption">MGLT (megalights/hour)</p>
+                    </div>
+
+                    <md-subheader class="md-accent md-no-sticky">Longevity</md-subheader>
+                    <div layout="row">
+                        <div class="metadata-2-line" flex>
+                            <p class="md-body-1">{{ $ctrl.openStarship.cargo_capacity }}</p>
+                            <p class="md-caption">Cargo Capacity <em>(kg)</em></p>
+                        </div>
+                        <div class="metadata-2-line" flex>
+                            <p class="md-body-1">{{ $ctrl.openStarship.consumables }}</p>
+                            <p class="md-caption">Consumables</p>
+                        </div>
+                    </div>
+                </md-card-content>
+                <md-card-actions layout="row" layout-align="end center">
+                    <md-button class="md-accent" ng-click="$ctrl.closeDetails()">Close Details</md-button>
+                </md-card-actions>
+            </md-card>
+        </md-content>
+    </div>
+</div>

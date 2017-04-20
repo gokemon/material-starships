@@ -42,7 +42,28 @@
         }
 
         function addStarship(searchCount, ev) {
-            // TODO: Add mdDialog
+            $mdDialog.show({
+                controller: 'addStarshipController as $ctrl',
+                templateUrl: 'templates/add-starship.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                bindToController: true,
+                locals: {
+                    name: searchCount === 0 ? ctrl.starshipSearch.$ : null
+                }
+            })
+            .then((starship) => {
+                ctrl.starships.push(starship);
+                $mdToast.show(
+                    $mdToast.simple()
+                        .textContent(`${ starship.name } starship added to directory.`)
+                        .position('bottom left')
+                        .hideDelay(3000)
+                );
+            }, () => {
+                console.log('Cancelled Dialog');
+            });
         }
 
         function compileIdenticon(starship) {

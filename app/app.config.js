@@ -21,7 +21,10 @@
             .hashPrefix('');
 
         // material design configs
-        // TODO: Add $mdThemingProvider
-        // TODO: Add $mdIconProvider
+        $mdThemingProvider.theme('default')
+            .primaryPalette('blue')
+            .accentPalette('deep-orange');
+
+        $mdIconProvider.defaultIconSet('../icons/traxion-icons.svg?v=0.1', 24);
     }
 })();
