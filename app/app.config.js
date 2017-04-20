@@ -21,10 +21,7 @@
             .hashPrefix('');
 
         // material design configs
-        $mdThemingProvider.theme('default')
-            .primaryPalette('blue')
-            .accentPalette('deep-orange');
-
-        $mdIconProvider.defaultIconSet('../icons/traxion-icons.svg?v=0.1', 24);
+        // TODO: Add $mdThemingProvider
+        // TODO: Add $mdIconProvider
     }
 })();
