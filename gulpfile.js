@@ -1,31 +1,34 @@
-const gulp          = require('gulp'),
-    autoprefixer  = require('gulp-autoprefixer'),
-    babel         = require('gulp-babel'),
-    cached        = require('gulp-cached'),
-    progeny       = require('gulp-progeny'),
-    concat        = require('gulp-concat'),
-    cssnano       = require('gulp-cssnano'),
-    gulpif        = require('gulp-if'),
-    imagemin      = require('gulp-imagemin'),
-    livereload    = require('gulp-livereload'),
-    remember      = require('gulp-remember'),
-    rename        = require('gulp-rename'),
-    rev           = require('gulp-rev-append'),
-    sass          = require('gulp-sass'),
-    sassGlob      = require('gulp-sass-glob'),
-    shell         = require('gulp-shell'),
-    sourcemaps    = require('gulp-sourcemaps'),
-    spawn         = require('child_process').spawn,
-    uglify        = require('gulp-uglify'),
-    del           = require('del'),
-    runSequence   = require('run-sequence'),
-    argv          = require('yargs').argv;
+// nicely done gulpfile sample
+const gulp = require('gulp'),
+    autoprefixer = require('gulp-autoprefixer'),
+    babel = require('gulp-babel'),
+    cached = require('gulp-cached'),
+    progeny = require('gulp-progeny'),
+    concat = require('gulp-concat'),
+    cssnano = require('gulp-cssnano'),
+    gulpif = require('gulp-if'),
+    imagemin = require('gulp-imagemin'),
+    livereload = require('gulp-livereload'),
+    remember = require('gulp-remember'),
+    rename = require('gulp-rename'),
+    rev = require('gulp-rev-append'),
+    sass = require('gulp-sass'),
+    sassGlob = require('gulp-sass-glob'),
+    shell = require('gulp-shell'),
+    sourcemaps = require('gulp-sourcemaps'),
+    spawn = require('child_process').spawn,
+    uglify = require('gulp-uglify'),
+    del = require('del'),
+    runSequence = require('run-sequence'),
+    argv = require('yargs').argv;
+
 
 // Browsers to target when prefixing CSS.
 const COMPATIBILITY = [
     // major browsers
     'last 2 versions', 'ie >= 11'
 ];
+
 
 // File paths to various assets are defined here.
 const PATHS = {
@@ -73,17 +76,18 @@ const PATHS = {
     }
 };
 
+
 /* cleans the build directory */
 gulp.task('clean', function() {
     return del(['public']);
 });
 
-gulp.task('icons', function () {
+gulp.task('icons', function() {
     return gulp.src(PATHS.inputs.icons)
         .pipe(gulp.dest(PATHS.outputs.icons));
 });
 
-gulp.task('images', function () {
+gulp.task('images', function() {
     return gulp.src(PATHS.inputs.images)
         .pipe(imagemin({
             optimizationLevel: 3,
@@ -146,6 +150,7 @@ gulp.task('vendor-javascript', function() {
         .pipe(livereload());
 });
 
+
 /* compiles scss files */
 gulp.task('sass', function() {
     // compile sass files then combines all css files
@@ -169,6 +174,7 @@ gulp.task('sass', function() {
         .pipe(gulp.dest(PATHS.outputs.css))
         .pipe(livereload());
 });
+
 
 /* live reload on template and partial files */
 gulp.task('templates', function() {
@@ -205,6 +211,7 @@ gulp.task('serve', function(callback) {
 gulp.task('build', function(callback) {
     runSequence('clean', ['icons', 'images', 'index', 'vendor-javascript', 'javascript', 'sass', 'templates'], 'rev', callback);
 });
+
 
 /* watches these files for changes and run the task on update */
 gulp.task('watch', ['build'], function() {

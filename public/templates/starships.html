@@ -1,42 +1,38 @@
 <div layout="column" layout-fill>
     <md-toolbar class="md-primary md-whiteframe-2dp">
         <div class="md-toolbar-tools">
-            <div flex layout="row" layout-align="start center"
-                 ng-show="$ctrl.searching === false">
+            <div flex layout="row" layout-align="start center" ng-show="$ctrl.searching === false">
                 <h2 md-truncate>Star Wars Starships</h2>
-                <md-button class="md-icon-button" aria-label="Search"
-                           ng-click="$ctrl.openSearch()">
+                <md-button class="md-icon-button" aria-label="Search" ng-click="$ctrl.openSearch()">
                     <md-icon md-svg-icon="search"></md-icon>
                 </md-button>
             </div>
 
-            <div class="search-container" flex layout="row" layout-align="start center"
-                 ng-show="$ctrl.searching === true">
+
+            <div class="search-container" flex layout="row" layout-align="start center" ng-show="$ctrl.searching === true">
                 <md-input-container flex>
                     <label>Search</label>
                     <input type="text" name="search" ng-model="$ctrl.starshipSearch.$">
                 </md-input-container>
-                <md-button class="md-icon-button" aria-label="Close Search"
-                           ng-click="$ctrl.closeSearch()">
+                <md-button class="md-icon-button" aria-label="Close Search" ng-click="$ctrl.closeSearch()">
                     <md-icon md-svg-icon="close"></md-icon>
                 </md-button>
             </div>
 
-            <md-button class="md-fab md-accent" aria-label="Add Starship"
-                       ng-click="$ctrl.addStarship(($ctrl.starships | filter:$ctrl.starshipSearch).length, $event)">
+
+            <md-button class="md-fab md-accent" aria-label="Add Starship" ng-click="$ctrl.addStarship(($ctrl.starships | filter:$ctrl.starshipSearch).length, $event)">
                 <md-icon md-svg-src="add"></md-icon>
             </md-button>
         </div>
         <md-progress-linear class="md-primary" md-mode="indeterminate" ng-if="$ctrl.loading === true"></md-progress-linear>
     </md-toolbar>
 
+
+
     <div flex layout="row">
-        <md-content flex="{{ $ctrl.openStarship === null ? '100' : '0' }}"
-                    flex-gt-sm="{{ $ctrl.openStarship === null ? '100' : '50' }}">
+        <md-content flex="{{ $ctrl.openStarship === null ? '100' : '0' }}" flex-gt-sm="{{ $ctrl.openStarship === null ? '100' : '50' }}">
             <md-list flex>
-                <md-list-item class="md-2-line"
-                              ng-click="$ctrl.openDetails(starship)"
-                              ng-repeat="starship in $ctrl.starships | orderBy:'name' | filter:$ctrl.starshipSearch">
+                <md-list-item class="md-2-line" ng-click="$ctrl.openDetails(starship)" ng-repeat="starship in $ctrl.starships | orderBy:'name' | filter:$ctrl.starshipSearch">
                     <img ng-src="data:image/png;base64,{{ $ctrl.compileIdenticon(starship) }}" class="md-avatar" alt="{{ starship.name }}" />
                     <div class="md-list-item-text">
                         <h3>{{ starship.name }}</h3>
